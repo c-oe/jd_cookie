@@ -4,5 +4,5 @@
 
 ## v1.0 
 
-**getSmsCode()** 先向jd发送获取验证码的请求，**checkSmsCode()** 使用验证码登录获取cookie
-两个方法必须由同一个对象调用，否则获取不了jd返回的参数
+> **getSmsCode()** 先向jd发送获取验证码的请求，**checkSmsCode()** 使用验证码登录获取cookie
+> 两个方法必须由同一个对象调用，否则获取不了jd返回的参数
