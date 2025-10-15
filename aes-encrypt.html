@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AES加密</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <script>
+        // AES加密函数
+        function aesEncrypt(text, key) {
+            try {
+                // AES/ECB/PKCS5Padding 加密
+                const encrypted = CryptoJS.AES.encrypt(
+                    CryptoJS.enc.Utf8.parse(text), 
+                    CryptoJS.enc.Utf8.parse(key), 
+                    {
+                        mode: CryptoJS.mode.ECB,
+                        padding: CryptoJS.pad.Pkcs7
+                    }
+                );
+                
+                // 转换为十六进制大写字符串（与你的Java代码一致）
+                return encrypted.ciphertext.toString(CryptoJS.enc.Hex).toUpperCase();
+            } catch (error) {
+                return "加密失败: " + error.message;
+            }
+        }
+
+        // 从URL参数获取输入
+        function getEncryptionResult() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const text = urlParams.get('text');
+            const key = urlParams.get('key') || 'light-app-123456';
+            
+            if (text) {
+                return aesEncrypt(text, key);
+            } else {
+                return "请提供text参数";
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const result = getEncryptionResult();
+            // 将结果传递给快捷指令
+            completion(result);
+        });
+    </script>
+</body>
+</html>
